@@ -12,7 +12,7 @@ namespace Store.G02.Persistence
 {
     public static class SpecificationEvaluator
     {
-        public static IQueryable<TEntity> GetQuery<TKey,TEntity> (IQueryable<TEntity> inputQuery ,ISpecifications<TKey,TEntity> spec) where TEntity : BaseEntity<TKey>
+        public static IQueryable<TEntity> GetQuery <TKey,TEntity> (IQueryable<TEntity> inputQuery ,ISpecifications<TKey,TEntity> spec) where TEntity : BaseEntity<TKey>
         {
             var query = inputQuery;
 
