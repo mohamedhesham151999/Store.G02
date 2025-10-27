@@ -3,11 +3,6 @@ using Store.G02.Domain.Contracts;
 using Store.G02.Domain.Entities;
 using Store.G02.Domain.Entities.Products;
 using Store.G02.Persistence.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.G02.Persistence.Repositories
 {
@@ -24,7 +19,7 @@ namespace Store.G02.Persistence.Repositories
             return changeTracker ?
                  await _context.Set<TEntity>().ToListAsync()
                  : await _context.Set<TEntity>().AsNoTracking().ToListAsync();
-            
+
         }
         public async Task<TEntity?> GetAsync(Tkey key)
         {
@@ -32,7 +27,7 @@ namespace Store.G02.Persistence.Repositories
             {
                 return await _context.Products.Include(P => P.Brand).Include(P => P.Type).FirstOrDefaultAsync(P => P.Id == key as int?) as TEntity;
             }
-                return await _context.Set<TEntity>().FindAsync(key);
+            return await _context.Set<TEntity>().FindAsync(key);
         }
 
         public async Task AddAsync(TEntity entity)
@@ -56,13 +51,13 @@ namespace Store.G02.Persistence.Repositories
 
         public async Task<TEntity?> GetAsync(ISpecifications<Tkey, TEntity> spec)
         {
-            return await ApplySpecifications(spec) .FirstOrDefaultAsync();
+            return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
 
-        private IQueryable<TEntity> ApplySpecifications(ISpecifications<Tkey,TEntity> spec)
+        private IQueryable<TEntity> ApplySpecifications(ISpecifications<Tkey, TEntity> spec)
         {
             return SpecificationEvaluator.GetQuery(_context.Set<TEntity>(), spec);
         }
 
     }
-}   
+}
