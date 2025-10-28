@@ -21,6 +21,17 @@ namespace Store.G02.Persistence
                 query = query.Where(spec.Criteria);
             }
 
+
+            if(spec.OrderBy is not null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            else if(spec.OrderByDescending is not null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+
+
             query = spec.Includes.Aggregate(query,(query, IncludeExpression) => query.Include(IncludeExpression) );
 
 
