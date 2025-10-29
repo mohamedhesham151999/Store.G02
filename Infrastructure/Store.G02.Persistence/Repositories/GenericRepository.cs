@@ -54,10 +54,16 @@ namespace Store.G02.Persistence.Repositories
             return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
 
+        public async Task<int> CountAsync(ISpecifications<Tkey, TEntity> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();
+        }
+
         private IQueryable<TEntity> ApplySpecifications(ISpecifications<Tkey, TEntity> spec)
         {
             return SpecificationEvaluator.GetQuery(_context.Set<TEntity>(), spec);
         }
 
+        
     }
 }
