@@ -31,6 +31,10 @@ namespace Store.G02.Persistence
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
 
+            if (spec.IsPaginationn)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
 
             query = spec.Includes.Aggregate(query,(query, IncludeExpression) => query.Include(IncludeExpression) );
 
