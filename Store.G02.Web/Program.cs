@@ -5,6 +5,7 @@ using Store.G02.Persistence.Data.Contexts;
 using Store.G02.Services;
 using Store.G02.Services.Abstractions;
 using Store.G02.Services.Mapping;
+using Store.G02.Web.Middleware;
 
 namespace Store.G02.Web
 {
@@ -39,7 +40,9 @@ namespace Store.G02.Web
              await dbInitializer.InitializerAsync();
             #endregion
 
-            app.UseStaticFiles();  // configure middlewar to let postman detect pictures in vsCode
+            
+            ////(Middlewar is a layer the request and response pass throw it)
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();                       
 
 
             // Configure the HTTP request pipeline.
@@ -48,6 +51,8 @@ namespace Store.G02.Web
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseStaticFiles();  //// configure middlewar to let postman detect pictures in vsCode
 
             app.UseHttpsRedirection();
 
