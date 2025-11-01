@@ -35,7 +35,7 @@ namespace Store.G02.Persistence.Repositories
             return await GetBasketAsync(basket.Id); 
         }
 
-        public async Task<bool?> DeleteBasketAsync(string id)
+        public async Task<bool> DeleteBasketAsync(string id)
         {
             return await _database.KeyDeleteAsync(id);
         }
