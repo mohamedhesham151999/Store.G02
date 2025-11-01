@@ -1,4 +1,5 @@
 ﻿using Store.G02.Domain.Exceptionsn;
+using Store.G02.Domain.Exceptionsn.BadRequest;
 using Store.G02.Shared.ErrorsModels;
 
 namespace Store.G02.Web.Middleware
@@ -44,6 +45,7 @@ namespace Store.G02.Web.Middleware
             response.StatusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
+                BadRequestException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 
