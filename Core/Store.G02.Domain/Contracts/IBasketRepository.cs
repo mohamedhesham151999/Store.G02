@@ -11,7 +11,7 @@ namespace Store.G02.Domain.Contracts
     {
         Task <CustomerBasket?> GetBasketAsync(string id);
         Task <CustomerBasket?> CreateBasketAsync(CustomerBasket basket , TimeSpan duration);
-        Task <bool?> DeleteBasketAsync(string id);
+        Task <bool> DeleteBasketAsync(string id);
         
     }
 }
