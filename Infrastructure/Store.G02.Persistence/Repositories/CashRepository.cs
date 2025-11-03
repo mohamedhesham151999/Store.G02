@@ -19,7 +19,7 @@ namespace Store.G02.Persistence.Repositories
             return redisValue;
         }
 
-        public async Task SetAsync(string key, string value, TimeSpan duration)
+        public async Task SetAsync(string key, object value, TimeSpan duration)
         {
            await _database.StringSetAsync(key, JsonSerializer.Serialize(value) ,duration);
         }
