@@ -9,6 +9,6 @@ namespace Store.G02.Domain.Contracts
     public interface ICasheRepository
     {
         Task<string?> GetAsync(string key);
-        Task SetAsync(string key, string value, TimeSpan duration);
+        Task SetAsync(string key, object value, TimeSpan duration);
     }
 }

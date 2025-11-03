@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Persistence.Repositories
 {
-    public class CashRepsitory(IConnectionMultiplexer connection) : ICasheRepository
+    public class CashRepository(IConnectionMultiplexer connection) : ICasheRepository
     {
 
         private readonly IDatabase _database = connection.GetDatabase();
