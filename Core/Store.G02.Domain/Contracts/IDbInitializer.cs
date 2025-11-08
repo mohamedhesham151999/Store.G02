@@ -13,5 +13,7 @@ namespace Store.G02.Domain.Contracts
         // concept of seeding => you have data stored in somewhere. you take this data and put it inside the created database, this operation happens only once
         #endregion
         Task InitializerAsync();
+        Task InitializeIdentityAsync();
+
     }
 }

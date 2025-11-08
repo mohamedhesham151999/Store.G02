@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Store.G02.Domain.Contracts;
+using Store.G02.Domain.Entities.Identity;
 using Store.G02.Persistence;
+using Store.G02.Persistence.Identity.Contexts;
 using Store.G02.Services;
-using Store.G02.Services.Abstractions;
-using Store.G02.Services.Mapping;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Web.Middleware;
-using System.Threading.Tasks;
+
 
 namespace Store.G02.Web.Extension
 {
@@ -16,8 +18,8 @@ namespace Store.G02.Web.Extension
         {
             services.AddBuiltInService();
             services.AddSwaggerInService();
+            services.AddIdentityInService();
             services.ConfigureServices();
-            
 
 
             services.AddInfraStructureService(configuration);
@@ -40,6 +42,18 @@ namespace Store.G02.Web.Extension
 
             return services;
         }
+        private static IServiceCollection AddIdentityInService(this IServiceCollection services)
+        {
+            services.AddIdentityCore<AppUser>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                 
+            }).AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<IdentityStoreDbContext>();
+
+            return services;
+        }
+
         private static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.Configure<ApiBehaviorOptions>(config =>
@@ -91,6 +105,7 @@ namespace Store.G02.Web.Extension
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializerAsync();
+            await dbInitializer.InitializeIdentityAsync();
             return app;
         }
         

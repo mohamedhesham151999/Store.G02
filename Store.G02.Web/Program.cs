@@ -27,7 +27,7 @@ namespace Store.G02.Web
             var app = builder.Build();
 
 
-            await app.ConfigureMiddelwares();
+            await app.ConfigureMiddelwares(); 
 
 
             app.Run();
