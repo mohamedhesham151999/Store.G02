@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Store.G02.Domain.Entities.Identity;
 using Store.G02.Domain.Exceptionsn;
 using Store.G02.Domain.Exceptionsn.BadRequest;
 using Store.G02.Domain.Exceptionsn.Unauthorized;
 using Store.G02.Services.Abstractions.Auth;
+using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Services.Auth
 {
-    public class AuthService(UserManager<AppUser> _userManager , IConfiguration _configuration) : IAuthService
+    public class AuthService(UserManager<AppUser> _userManager ,IOptions<JwtOptions> options) : IAuthService
     {
         public async Task<UserResponse?> LoginAsync(LoginRequest request)
         {
@@ -80,15 +82,15 @@ namespace Store.G02.Services.Auth
                 authClaims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-           
+            var jwtOptions = options.Value;
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecurityKey));
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["JwtOptions:Issuer"],
-                audience : _configuration["JwtOptions:Audience"],
+                issuer: jwtOptions.Issuer,
+                audience : jwtOptions.Audience,
                 claims : authClaims,
-                expires : DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationDays"])),
+                expires : DateTime.Now.AddDays(jwtOptions.DurationDays),
                 signingCredentials : new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
                 );
 
