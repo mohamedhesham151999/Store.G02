@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Store.G02.Domain.Contracts;
 using Store.G02.Domain.Entities.Identity;
 using Store.G02.Persistence;
@@ -9,6 +11,7 @@ using Store.G02.Services;
 using Store.G02.Shared;
 using Store.G02.Shared.ErrorsModels;
 using Store.G02.Web.Middleware;
+using System.Text;
 
 
 namespace Store.G02.Web.Extension
@@ -25,10 +28,41 @@ namespace Store.G02.Web.Extension
             services.AddInfraStructureService(configuration);
             services.AddApplicationServices(configuration);
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
-           
+            services.AddAuthenticationService(configuration);
+
             return services;
+
         }
 
+        private static IServiceCollection AddAuthenticationService(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtOption = configuration.GetSection("JwtOptions").Get<JwtOptions>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Bearer";
+                options.DefaultAuthenticateScheme = "Bearer";
+
+            }).AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    #region to check if token is valid or not 
+
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOption.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtOption.Audience,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOption.SecurityKey))
+
+                    #endregion
+                };
+            });
+
+            return services;
+
+        }
         private static IServiceCollection AddBuiltInService(this IServiceCollection services)
         {
             services.AddControllers();
