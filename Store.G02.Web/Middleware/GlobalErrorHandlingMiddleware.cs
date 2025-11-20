@@ -1,5 +1,5 @@
-﻿using Store.G02.Domain.Exceptionsn;
-using Store.G02.Domain.Exceptionsn.BadRequest;
+﻿using Store.G02.Domain.Exceptionsn.BadRequest;
+using Store.G02.Domain.Exceptionsn.NotFound;
 using Store.G02.Domain.Exceptionsn.Unauthorized;
 using Store.G02.Shared.ErrorsModels;
 
