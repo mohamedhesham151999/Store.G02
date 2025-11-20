@@ -9,7 +9,7 @@ namespace Store.G02.Shared.Dtos.Orders
     public class OrderRequest
     {
         public string BasketId { get; set; }
-        public int DeliveryMethodID { get; set; }
+        public int DeliveryMethodId { get; set; }
         public OrderAddressDto ShipToAddress { get; set; }
     }
 }
