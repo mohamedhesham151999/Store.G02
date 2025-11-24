@@ -20,7 +20,7 @@ namespace Store.G02.Domain.Entities.Order
             UserEmail = userEmail;
             ShippingAddress = shippingAddress;
             DeliveryMethod = deliveryMethod;
-            Item = item;
+            Items = item;
             SubTotal = subTotal;
         }
 
@@ -30,7 +30,7 @@ namespace Store.G02.Domain.Entities.Order
         public OrderAddress ShippingAddress { get; set; }
         public DeliveryMethod DeliveryMethod { get; set; }
         public int DeliveryMethodId { get; set; }
-        public ICollection<OrderItem> Item { get; set; }
+        public ICollection<OrderItem> Items { get; set; }
         public decimal SubTotal { get; set; } // price * quantity
 
         //[NotMapped]

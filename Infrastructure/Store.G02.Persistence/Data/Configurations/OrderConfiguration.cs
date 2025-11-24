@@ -19,7 +19,7 @@ namespace Store.G02.Persistence.Data.Configurations
                  .WithMany()
                  .HasForeignKey(O => O.DeliveryMethodId);
 
-            builder.HasMany(O => O.Item)
+            builder.HasMany(O => O.Items)
                    .WithOne()
                    .OnDelete(DeleteBehavior.Cascade);
 
