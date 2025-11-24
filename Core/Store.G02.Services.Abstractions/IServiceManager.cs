@@ -1,6 +1,7 @@
 ﻿using Store.G02.Services.Abstractions.Auth;
 using Store.G02.Services.Abstractions.Baskets;
 using Store.G02.Services.Abstractions.Cashe;
+using Store.G02.Services.Abstractions.Orders;
 using Store.G02.Services.Abstractions.Products;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,7 @@ namespace Store.G02.Services.Abstractions
         IBasketService BasketService { get; }
         ICasheService CasheService { get; }
         IAuthService AuthService { get; }
+        IOrderService orderService { get; }
+
     }
 }

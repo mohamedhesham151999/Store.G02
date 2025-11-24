@@ -63,8 +63,8 @@ namespace Store.G02.Services.Orders
             var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
 
             await _unitOfWork.GetRepository<Guid, Order>().AddAsync(order);
+
             var count = await _unitOfWork.SaveChangesAsync();
-            if (count > 0) throw new CreateOrderBadRequestException();
 
             return _mapper.Map<OrderResponse>(order);
         }
