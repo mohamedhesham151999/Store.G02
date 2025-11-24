@@ -4,7 +4,9 @@ using Store.G02.Domain.Entities.Order;
 using Store.G02.Domain.Entities.Products;
 using Store.G02.Domain.Exceptionsn.BadRequest;
 using Store.G02.Domain.Exceptionsn.NotFound;
+using Store.G02.Domain.Exceptionsn.Order;
 using Store.G02.Services.Abstractions.Orders;
+using Store.G02.Services.Specifications.Orders;
 using Store.G02.Shared.Dtos.Orders;
 using System;
 using System.Collections.Generic;
@@ -69,19 +71,26 @@ namespace Store.G02.Services.Orders
             return _mapper.Map<OrderResponse>(order);
         }
 
-        public Task<IEnumerable<DeliveryMethodResponse>> GetAllDeliveryMethodAsync()
+        public async Task<IEnumerable<DeliveryMethodResponse>> GetAllDeliveryMethodAsync()
         {
-            throw new NotImplementedException();
+            var deliveryMethod = await _unitOfWork.GetRepository<int, DeliveryMethod>().GetAllAsync();
+            return _mapper.Map<IEnumerable<DeliveryMethodResponse>>(deliveryMethod);
+            
         }
 
-        public Task<OrderResponse?> GetOrderByIdForSpecificUserAsync(Guid id, string userEmail)
+        public async Task<OrderResponse?> GetOrderByIdForSpecificUserAsync(Guid id, string userEmail)
         {
-            throw new NotImplementedException();
+            var spec = new OrderSpecification(id, userEmail);
+            var order = await _unitOfWork.GetRepository<Guid, Order>().GetAsync(spec);
+            if (order is null) throw new OrderNotFoundException(id);
+            return _mapper.Map<OrderResponse>(order);
         }
 
-        public Task<IEnumerable<OrderResponse>> GetOrdersForSpecificUserAsync(string userEmail)
+        public async Task<IEnumerable<OrderResponse>> GetOrdersForSpecificUserAsync(string userEmail)
         {
-            throw new NotImplementedException();
+            var spec = new OrderSpecification(userEmail);
+            var order = await _unitOfWork.GetRepository<Guid, Order>().GetAllAsync(spec);
+            return _mapper.Map<IEnumerable<OrderResponse>> (order);
         }
     }
 }
