@@ -22,7 +22,7 @@ namespace Store.G02.Presentation
             return Ok(result);
         }
 
-
+            
         [HttpPost]
         public async Task<IActionResult> CreateOrUpdateBasket(BasketDto dto)
         {
