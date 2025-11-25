@@ -17,8 +17,8 @@ namespace Store.G02.Services.Abstractions.Auth
         // Get Current User
         Task <UserResponse?> GetCurrentUserAsync(string email);
         // Get current user Address
-        Task <AddressDto?> GetUserAddressAsync(string email);
+        Task <AddressDto?> GetCurrentUserAddressAsync(string email);
         // Update current user Address
-        Task<UserResponse> UpdateCurrentUserAddressAsync(AddressDto request,string email);
+        Task<AddressDto?> UpdateCurrentUserAddressAsync(AddressDto request,string email);
     }
 }

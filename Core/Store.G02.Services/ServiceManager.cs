@@ -33,7 +33,7 @@ namespace Store.G02.Services
 
         public ICasheService CasheService { get; } = new CasheService(_cashRepository);
 
-        public IAuthService AuthService { get; } = new AuthService(_userManager, options);
+        public IAuthService AuthService { get; } = new AuthService(_userManager, options, _mapper);
 
         public IOrderService orderService { get; } = new OrderService(_unitOfWork, _mapper , _basketRepository);
     }
