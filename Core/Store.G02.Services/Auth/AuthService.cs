@@ -39,7 +39,7 @@ namespace Store.G02.Services.Auth
 
         }
 
-        public async Task<AddressDto?> GetUserAddressAsync(string email)
+        public async Task<AddressDto?> GetCurrentUserAddressAsync(string email)
         {
             var user = await _userManager.Users.Include(U=>U.Address).FirstOrDefaultAsync( U=>U.Email.ToLower() == email.ToLower());
             if( user is null ) throw new UserNotFoundException(email);
