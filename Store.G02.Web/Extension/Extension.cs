@@ -30,6 +30,14 @@ namespace Store.G02.Web.Extension
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
             services.AddAuthenticationService(configuration);
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             return services;
 
         }
@@ -128,6 +136,8 @@ namespace Store.G02.Web.Extension
             app.UseStaticFiles();  
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

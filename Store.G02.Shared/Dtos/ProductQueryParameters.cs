@@ -12,7 +12,7 @@ namespace Store.G02.Shared.Dtos
         public int? TypeId {get; set;} 
         public string? Sort { get; set;} 
         public string? Search {get; set;}
-        public int PageSize { get; set; } = 5;
         public int PageIndex { get; set; } = 1;
+        public int PageSize { get; set; } = 5;
     }
 }

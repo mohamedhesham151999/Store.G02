@@ -25,11 +25,11 @@ namespace Store.G02.Services
                                 IBasketRepository _basketRepository,
                                 ICasheRepository _cashRepository,
                                 UserManager<AppUser> _userManager,
-                                IOptions<JwtOptions> options) : IServiceManager
+                                IOptions<JwtOptions> options ) : IServiceManager
     {
         public IProductService ProductService { get; } = new ProductService(_unitOfWork, _mapper);
 
-        public IBasketService BasketService { get; } = new BasketService(_basketRepository, _mapper);
+        public IBasketService BasketService { get; } = new BasketService(_basketRepository, _mapper );
 
         public ICasheService CasheService { get; } = new CasheService(_cashRepository);
 
